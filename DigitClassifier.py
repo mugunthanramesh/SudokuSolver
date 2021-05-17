@@ -19,11 +19,14 @@ class DigitsClassifier:
             self.trainModel()
             return
 
-        self.model.add(Conv2D(32,(3,3), input_shape=(28, 28, 1), activation="relu"))
-        self.model.add(MaxPool2D())
-        self.model.add(Flatten())
-        self.model.add(Dense(512, activation="relu"))
+        self.model.add(Conv2D(32,(5,5), input_shape=(28, 28, 1), activation="relu"))
+        self.model.add(MaxPool2D(pool_size = (2,2)))
+        self.model.add(Conv2D(32,(3,3), activation="relu"))
+        self.model.add(MaxPool2D(pool_size = (2,2)))
         self.model.add(Dropout(0.2))
+        self.model.add(Flatten())
+        self.model.add(Dense(128, activation="relu"))
+        self.model.add(Dense(64, activation='relu'))
         self.model.add(Dense(10, activation="softmax"))
 
         self.model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
